@@ -18,4 +18,8 @@
     <Folder Include="Repositories\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Switch.Domain\Switch.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

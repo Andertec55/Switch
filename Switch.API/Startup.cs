@@ -1,23 +1,37 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Switch.Infra.Data.Context;
+using System;
 
 namespace Switch.API
 {
     public class Startup
     {
-        // This method gets called by the runtime. Use this method to add services to the container.
-        // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
+        IConfiguration Configuration { get; set; }
+        public Startup(IConfiguration configuration)
+        {
+            var buider = new ConfigurationBuilder().AddJsonFile("config.json");
+            Configuration = buider.Build();
+            
+        }
+        
         public void ConfigureServices(IServiceCollection services)
         {
+            var conn = Configuration.GetConnectionString("SwitchDB");
+            services.AddDbContext<SwitchContext>(option => option.UseLazyLoadingProxies().UseMySql(conn,
+                m => m.MigrationsAssembly("Switch.Infral.Data")));
+            services.AddMvcCore();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        private Action<DbContextOptionsBuilder> UseMySql(string conn, Func<object, object> p)
+        {
+            throw new NotImplementedException();
+        }
+
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())

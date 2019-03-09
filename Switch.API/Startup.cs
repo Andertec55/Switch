@@ -5,19 +5,16 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Switch.Infra.Data.Context;
-using System;
-
 namespace Switch.API
 {
     public class Startup
     {
-        IConfiguration Configuration { get; set; }
 
+        public IConfiguration Configuration { get; }
         public Startup(IConfiguration configuration)
         {
             var builder = new ConfigurationBuilder().AddJsonFile("config.json");
             Configuration = builder.Build();
-            
         }
 
         public void ConfigureServices(IServiceCollection services)

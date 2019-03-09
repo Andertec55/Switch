@@ -7,7 +7,7 @@ namespace Switch.Infra.Data.Context // classe de configuracao inicial da classe 
 
     {
         public DbSet<Usuario> Usuarios { get; set; }
-        public SwitchContext(DbContextOptions option) : base(option)
+        public SwitchContext(DbContextOptions options) : base(options)
         {
 
         }

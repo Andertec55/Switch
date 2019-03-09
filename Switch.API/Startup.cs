@@ -12,18 +12,19 @@ namespace Switch.API
     public class Startup
     {
         IConfiguration Configuration { get; set; }
+
         public Startup(IConfiguration configuration)
         {
-            var buider = new ConfigurationBuilder().AddJsonFile("config.json");
-            Configuration = buider.Build();
+            var builder = new ConfigurationBuilder().AddJsonFile("config.json");
+            Configuration = builder.Build();
             
         }
-        
+
         public void ConfigureServices(IServiceCollection services)
         {
             var conn = Configuration.GetConnectionString("SwitchDB");
-            services.AddDbContext<SwitchContext>(option => option.UseLazyLoadingProxies().UseMySql(conn,
-                m => m.MigrationsAssembly("Switch.Infral.Data")));
+            services.AddDbContext<SwitchContext>(option => option.UseLazyLoadingProxies()
+                                                    .UseMySql(conn, m => m.MigrationsAssembly("Switch.Infra.Data")));
             services.AddMvcCore();
         }
 
